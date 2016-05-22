@@ -3,7 +3,7 @@ describe 'crawling pages' do
 
   let(:parser) do
     source = File.read('spec/fixtures/home.html')
-    Parser.new(source)
+    Parser.new(source, 'http://mysample.com')
   end
 
   it 'craws all pages and saving them into database' do

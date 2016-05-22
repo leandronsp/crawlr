@@ -36,6 +36,7 @@ gem 'nokogiri'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'pry-byebug'
   gem 'byebug'
   gem 'spring-commands-rspec'
   gem 'rspec-rails'
