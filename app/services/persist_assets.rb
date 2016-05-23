@@ -4,7 +4,7 @@ class PersistAssets
   end
 
   def insert_assets_for(url, assets)
-    page = Page.where(url: url).first
+    page = Page.where(url: url, domain_id: @domain.id).first
 
     if page
       Asset.destroy_all page: page

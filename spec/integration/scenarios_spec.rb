@@ -50,12 +50,12 @@ describe 'crawling a domain' do
     end
 
     it 'ensures the new collection is fresh if calling it twice' do
-      Page.create url: '/my-url', domain: domain
-      persist_assets_service.insert_assets_for '/my-url', parser.assets
+      Page.create url: '/', domain: domain
+      persist_assets_service.insert_assets_for '/', parser.assets
       expect(Asset.count).to eq(8)
 
       # trying twice, it should destroy_all previous assets for this page
-      persist_assets_service.insert_assets_for '/my-url', parser.assets
+      persist_assets_service.insert_assets_for '/', parser.assets
       expect(Asset.count).to eq(8)
     end
   end

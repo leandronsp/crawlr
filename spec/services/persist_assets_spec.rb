@@ -21,7 +21,8 @@ describe PersistAssets do
     let(:page) { Page.new(id: 42, url: '/page-1') }
 
     it 'ensures to insert a fresh collection to the page' do
-      allow(Page).to receive(:where).with(url: '/page-1').and_return([page])
+      allow(Page).to receive(:where).with(url: '/page-1', domain_id: domain.id)
+                                    .and_return([page])
       allow(Asset).to receive(:destroy_all).with(page: page)
       allow(Asset).to receive(:create)
 

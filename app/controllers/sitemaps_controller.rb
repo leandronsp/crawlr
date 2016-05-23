@@ -11,6 +11,7 @@ class SitemapsController < ApplicationController
     parser.parse!
 
     PersistPages.new(domain).bulk_insert(parser.pages)
+    PersistAssets.new(domain).insert_assets_for(domain.root_page.url, parser.assets)
 
     @pages = domain.reload.pages.map do |page|
       response = RestClient.get(page.full_url)
