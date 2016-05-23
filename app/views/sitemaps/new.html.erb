@@ -2,5 +2,7 @@
   <label for="domain">Domain</label>
   <input type="text" name="domain" />
 
+  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
   <button type="submit">Generate sitemap</button>
 </form>

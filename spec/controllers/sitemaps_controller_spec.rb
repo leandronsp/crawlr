@@ -20,10 +20,6 @@ describe SitemapsController, type: :controller do
       post :generate, { domain: domain }
 
       expect(response.body).to have_content("#{domain}/page-1")
-      expect(response.body).to have_content("#{domain}/page-2")
-      expect(response.body).to have_content("#{domain}/page-3")
-      expect(response.body).to have_content("#{domain}/page-5/")
-      expect(response.body).to have_content("#{domain}/page-6/new/")
     end
   end
 end

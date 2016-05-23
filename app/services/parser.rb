@@ -56,12 +56,12 @@ class Parser
   end
 
   def looks_like_asset?(value)
-    value.match(/.*?\.(png|ico|jpg|jpeg|css|js)/).present? &&
+    value && value.match(/.*?\.(png|ico|jpg|jpeg|css|js)/).present? &&
       (value.start_with?(@domain) ||
         (!value.start_with?('//') && !value.start_with?('http')))
   end
 
   def looks_same_domain?(url)
-    url.start_with?(@domain) || url.match(/^\/[^\/].*$/).present?
+    url && (url.start_with?(@domain) || url.match(/^\/[^\/].*$/).present?)
   end
 end
