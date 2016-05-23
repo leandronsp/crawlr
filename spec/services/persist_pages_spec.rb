@@ -8,7 +8,7 @@ describe PersistPages do
       [
         { url: '/page-1' },
         { url: '/page-2' },
-        { url: '/page-3' },
+        { url: 'http://mysample.com/page-3' },
         { url: '/page-5/' },
         { url: '/page-6/new/' }
       ]

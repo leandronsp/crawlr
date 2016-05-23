@@ -27,6 +27,12 @@ describe 'crawling a domain' do
       persist_pages_service.bulk_insert [{ url: '/my-url' }]
       expect(Page.where(url: '/my-url').count).to eq(1)
     end
+
+    it 'removes domain from page url before inserting' do
+      persist_pages_service.bulk_insert [{ url: 'http://mysample.com/my-url' }]
+      expect(Page.where(url: '/my-url').count).to eq(1)
+    end
+
   end
 
   describe 'assets' do

@@ -5,9 +5,14 @@ class PersistPages
 
   def bulk_insert(pages)
     pages.each do |hash|
-      unless Page.exists?(url: hash[:url], domain_id: @domain.id)
-        Page.create url: hash[:url], domain: @domain
+      url = url_without_domain hash[:url]
+      unless Page.exists?(url: url, domain_id: @domain.id)
+        Page.create url: url, domain: @domain
       end
     end
+  end
+
+  def url_without_domain(url)
+    url.match(/(#{@domain.url})?(.*)$/)[2]
   end
 end

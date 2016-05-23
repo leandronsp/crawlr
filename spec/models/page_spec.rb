@@ -6,4 +6,13 @@ describe Page do
       domain: ["can't be blank"]
     })
   end
+
+  it 'does not duplicate page' do
+    domain = Domain.create url: 'http://somedomain.com'
+    page    = described_class.create url: '/page-1', domain: domain
+    new_one = described_class.create url: '/page-1', domain: domain
+    expect(new_one.errors.messages).to eq({
+      url: ['has already been taken']
+    })
+  end
 end
