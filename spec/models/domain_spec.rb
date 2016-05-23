@@ -5,4 +5,8 @@ describe Domain do
     expect(new_one.errors).to_not be_empty
   end
 
+  it 'creates a default root page' do
+    domain = described_class.create url: 'http://mysample.com'
+    expect(domain.pages.first.url).to eq('/')
+  end
 end

@@ -4,11 +4,7 @@ class PagePresenter
   end
 
   def url
-    if @page.url.start_with?('/')
-      @page.domain.url + @page.url
-    else
-      @page.domain.url + '/' + @page.url
-    end
+    @page.full_url
   end
 
   def assets

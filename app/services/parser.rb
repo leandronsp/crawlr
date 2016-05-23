@@ -15,9 +15,7 @@ class Parser
       looks_same_domain? link['href']
     end
 
-    root = [{ url: '/' }]
-
-    root + result.map do |link|
+    result.map do |link|
       { url: link['href'] }
     end
   end

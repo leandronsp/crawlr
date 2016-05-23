@@ -25,7 +25,7 @@ describe 'crawling a domain' do
     it 'does not save an existent page' do
       Page.create url: '/my-url', domain: domain
       persist_pages_service.bulk_insert [{ url: '/my-url' }]
-      expect(Page.count).to eq(1)
+      expect(Page.where(url: '/my-url').count).to eq(1)
     end
   end
 

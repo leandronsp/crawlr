@@ -14,9 +14,8 @@ describe Parser do
   describe '#pages' do
     before { subject.parse! }
 
-    it 'returns all pages within the same domain, including root' do
+    it 'returns all pages within the same domain' do
       pages = [
-        { url: '/' },
         { url: '/page-1' },
         { url: '/page-2' },
         { url: '/page-3' },

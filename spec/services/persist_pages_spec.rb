@@ -6,7 +6,6 @@ describe PersistPages do
   describe '#bulk_insert' do
     let(:pages) do
       [
-        { url: '/' },
         { url: '/page-1' },
         { url: '/page-2' },
         { url: '/page-3' },
@@ -22,7 +21,7 @@ describe PersistPages do
 
     it 'inserts all the pages' do
       subject.bulk_insert pages
-      expect(Page).to have_received(:create).exactly(6).times
+      expect(Page).to have_received(:create).exactly(5).times
     end
 
     context 'existent page' do
@@ -30,7 +29,7 @@ describe PersistPages do
         allow(Page).to receive(:exists?).with(url: '/page-2', domain_id: domain.id).and_return(true)
 
         subject.bulk_insert pages
-        expect(Page).to have_received(:create).exactly(5).times
+        expect(Page).to have_received(:create).exactly(4).times
       end
 
     end
