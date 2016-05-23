@@ -1,7 +1,8 @@
 describe Parser do
 
+  let(:domain) { double('domain', id: 42, url: 'http://mysample.com') }
   let(:source) { File.read('spec/fixtures/home.html') }
-  subject { Parser.new(source, 'http://mysample.com') }
+  subject { Parser.new(source, domain) }
 
   describe '#parse!' do
     it 'parses the source and stores the document in an attribute' do
@@ -13,8 +14,9 @@ describe Parser do
   describe '#pages' do
     before { subject.parse! }
 
-    it 'returns all pages within the same domain' do
+    it 'returns all pages within the same domain, including root' do
       pages = [
+        { url: '/' },
         { url: '/page-1' },
         { url: '/page-2' },
         { url: '/page-3' },

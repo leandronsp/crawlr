@@ -15,11 +15,11 @@ describe SitemapsController, type: :controller do
     it 'parses the domain URL and returns all pages and respective assets' do
       domain = 'http://mysample.com'
       source = File.read('spec/fixtures/home.html')
-      allow(RestClient).to receive(:get).and_return(source)
+      allow(RestClient).to receive(:get).with(domain).and_return(source)
 
       post :generate, { domain: domain }
 
-      expect(response.body).to have_content("#{domain}/page-1")
+      expect(response.body).to have_content("#{Domain.last.url}/page-1")
     end
   end
 end

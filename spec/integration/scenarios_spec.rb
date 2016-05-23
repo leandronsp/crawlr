@@ -1,22 +1,29 @@
-describe 'crawling' do
-  let(:persist_pages_service)  { PersistPages.new  }
-  let(:persist_assets_service) { PersistAssets.new }
+describe 'crawling a domain' do
+  let(:domain)                 { Domain.create(url: 'http://mysample.com') }
+  let(:persist_pages_service)  { PersistPages.new(domain)  }
+  let(:persist_assets_service) { PersistAssets.new(domain) }
 
   let(:parser) do
     source = File.read('spec/fixtures/home.html')
-    Parser.new(source, 'http://mysample.com')
+    Parser.new(source, domain)
   end
 
   before { parser.parse! }
 
+  it 'has 6 pages including the domain root' do
+    persist_pages_service.bulk_insert parser.pages
+    expect(domain.pages.count).to eq(6)
+    expect(domain.pages.first.url).to eq('/')
+  end
+
   describe 'pages' do
-    it 'craws all pages and saving them into database' do
+    it 'craws all pages and saves them into database' do
       persist_pages_service.bulk_insert parser.pages
-      expect(Page.count).to eq(5)
+      expect(Page.count).to eq(6)
     end
 
     it 'does not save an existent page' do
-      Page.create url: '/my-url'
+      Page.create url: '/my-url', domain: domain
       persist_pages_service.bulk_insert [{ url: '/my-url' }]
       expect(Page.count).to eq(1)
     end
@@ -24,7 +31,7 @@ describe 'crawling' do
 
   describe 'assets' do
     it 'inserts all assets for the page' do
-      page = Page.create url: '/my-url'
+      page = Page.create url: '/my-url', domain: domain
       persist_assets_service.insert_assets_for '/my-url', parser.assets
 
       expect(Asset.count).to eq(8)
@@ -37,7 +44,7 @@ describe 'crawling' do
     end
 
     it 'ensures the new collection is fresh if calling it twice' do
-      Page.create url: '/my-url'
+      Page.create url: '/my-url', domain: domain
       persist_assets_service.insert_assets_for '/my-url', parser.assets
       expect(Asset.count).to eq(8)
 

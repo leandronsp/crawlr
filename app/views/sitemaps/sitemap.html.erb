@@ -1,18 +1,12 @@
 <div class="sitemap">
-  <div data-url="<%= @domain %>">
-    <%= @domain %>
-    <ul>
-      <% @assets.each do |asset| %>
+  <% @pages.each do |page| %>
+    <div data-url="<%= page.url %>">
+      <%= page.url %>
+      <% page.assets.each do |asset| %>
         <li>
           <%= asset.url %>
         </li>
       <% end %>
-    </ul>
-  </div>
-
-  <% @pages.each do |page| %>
-    <div data-url="<%= page.url %>">
-      <%= page.url %>
     </div>
   <% end %>
 </div>

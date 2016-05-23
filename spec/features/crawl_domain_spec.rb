@@ -22,8 +22,8 @@ describe 'after user input, the page is redirected to the sitemap', type: :featu
       expect(page).to have_content "#{domain}/home.css"
     end
 
-    #within "div[data-url='#{domain}/page-1'] ul" do
-    #  expect(page).to have_content "#{domain}/page-1.css"
-    #end
+    within "div[data-url='#{domain}/page-1'] ul" do
+      expect(page).to have_content "#{domain}/home.css"
+    end
   end
 end

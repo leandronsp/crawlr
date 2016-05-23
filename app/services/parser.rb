@@ -15,7 +15,9 @@ class Parser
       looks_same_domain? link['href']
     end
 
-    result.map do |link|
+    root = [{ url: '/' }]
+
+    root + result.map do |link|
       { url: link['href'] }
     end
   end
@@ -57,11 +59,11 @@ class Parser
 
   def looks_like_asset?(value)
     value && value.match(/.*?\.(png|ico|jpg|jpeg|css|js)/).present? &&
-      (value.start_with?(@domain) ||
+      (value.start_with?(@domain.url) ||
         (!value.start_with?('//') && !value.start_with?('http')))
   end
 
   def looks_same_domain?(url)
-    url && (url.start_with?(@domain) || url.match(/^\/[^\/].*$/).present?)
+    url && (url.start_with?(@domain.url) || url.match(/^\/[^\/].*$/).present?)
   end
 end

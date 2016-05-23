@@ -1,15 +1,17 @@
 class PagePresenter
-  def initialize(hash, opts = {})
-    @hash   = hash
-    @opts   = opts
-    @domain = opts[:domain] || ""
+  def initialize(page)
+    @page = page
   end
 
   def url
-    if @hash[:url].start_with?('/')
-      @domain + @hash[:url]
+    if @page.url.start_with?('/')
+      @page.domain.url + @page.url
     else
-      @domain + "/#{@hash[:url]}"
+      @page.domain.url + '/' + @page.url
     end
+  end
+
+  def assets
+    @page.assets
   end
 end

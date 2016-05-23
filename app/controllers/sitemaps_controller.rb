@@ -2,18 +2,17 @@ class SitemapsController < ApplicationController
   def new; end
 
   def generate
-    @domain   = params[:domain]
-    response = RestClient.get(@domain)
-    parser   = Parser.new(response, @domain)
+    domain = Domain.create url: params[:domain]
+
+    response = RestClient.get(domain.url)
+    parser   = Parser.new(response, domain)
 
     parser.parse!
 
-    @pages = parser.pages.map do |page|
-      PagePresenter.new page, domain: @domain
-    end
+    PersistPages.new(domain).bulk_insert(parser.pages)
 
-    @assets = parser.assets.map do |asset|
-      AssetPresenter.new asset, domain: @domain
+    @pages = domain.pages.map do |page|
+      PagePresenter.new page
     end
 
     render :sitemap

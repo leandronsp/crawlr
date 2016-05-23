@@ -1,5 +1,9 @@
 describe PersistAssets do
 
+  let(:domain) { double('domain', id: 42, url: 'http://mysample.com') }
+
+  subject { PersistAssets.new(domain) }
+
   describe '#insert_assets_for' do
     let(:assets) do
       [
@@ -36,13 +40,14 @@ describe PersistAssets do
     context 'page does not exist' do
       it 'creates the page and insert the assets' do
         allow(Page).to receive(:where).and_return([])
-        allow(Page).to receive(:create).with(url: '/page-1').and_return(page)
+        allow(Page).to receive(:create).with(url: '/page-1', domain: domain)
+                                       .and_return(page)
         allow(Asset).to receive(:create)
         allow(Asset).to receive(:destroy_all)
 
         subject.insert_assets_for('/page-1', assets)
 
-        expect(Page).to have_received(:create).with(url: '/page-1')
+        expect(Page).to have_received(:create).with(url: '/page-1', domain: domain)
         expect(Asset).to_not have_received(:destroy_all)
 
         assets.each do |asset|
