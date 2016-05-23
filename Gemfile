@@ -44,6 +44,8 @@ group :development, :test do
   gem 'guard-spring'
   gem 'database_cleaner'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do

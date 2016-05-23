@@ -16,7 +16,7 @@ class Parser
     end
 
     result.map do |link|
-      { name: link.text, url: link['href'] }
+      { url: link['href'] }
     end
   end
 

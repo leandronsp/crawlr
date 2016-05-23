@@ -15,11 +15,11 @@ describe Parser do
 
     it 'returns all pages within the same domain' do
       pages = [
-        { name: 'Page 1', url: '/page-1' },
-        { name: 'Page 2', url: '/page-2' },
-        { name: 'Page 3', url: '/page-3' },
-        { name: 'Page 5', url: '/page-5/' },
-        { name: 'Page 6', url: '/page-6/new/' }
+        { url: '/page-1' },
+        { url: '/page-2' },
+        { url: '/page-3' },
+        { url: '/page-5/' },
+        { url: '/page-6/new/' }
       ]
 
       expect(subject.pages).to eq(pages)
