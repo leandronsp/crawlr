@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160522211000) do
+ActiveRecord::Schema.define(version: 20160523100114) do
+
+  create_table "assets", force: :cascade do |t|
+    t.string   "url"
+    t.integer  "page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "assets", ["page_id"], name: "index_assets_on_page_id"
 
   create_table "pages", force: :cascade do |t|
-    t.string   "name"
     t.string   "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
