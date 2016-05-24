@@ -1,24 +1,28 @@
-<form id="sitemap">
-  <label for="domain">Domain</label>
-  <input type="text" name="domain" />
-
-  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-  <button type="submit">Generate sitemap</button>
-</form>
-
-<div class="results-holder">
+<div class="menu">
+  <form id="sitemap" class="form-inline col-md-12">
+    <div class="col-md-1"> </div>
+    <div class="col-md-11">
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+      <input type="text" name="domain" autocomplete="off" class="col-md-4 col-md-offset-2" placeholder="Type a domain" />
+      <button type="submit" class="col-md-2">Generate sitemap</button>
+    </div>
+  </form>
 </div>
 
+<div class="results-holder"> </div>
+
 <script id="resultsTemplate" type="text/x-jsrender">
-  <div class="sitemap">
+  <div class="sitemap container">
   {{for pages}}
-    <div data-url="{{:full_url}}">
-      {{:full_url}}
-      <ul>
+    <div class="page" title="{{:full_url}}" data-url="{{:full_url}}">
+      <a href="#{{:id}}" data-toggle="collapse" class="title">{{:title}}</a>
+      <ul id="{{:id}}" class="collapse no-transition">
+        <li class="asset">
+          <a href="{{:full_url}}" target="_blank" title="{{:full_url}}">{{:url}}</a>
+        </li>
         {{for assets}}
-          <li>
-            {{:full_url}}
+          <li class="asset">
+            <a href="{{:full_url}}" target="_blank" title="{{:full_url}}">{{:url}}</a>
           </li>
         {{/for}}
       </ul>
@@ -28,27 +32,53 @@
 </script>
 
 <%= javascript_tag do %>
-  $(document).ready(function() {
+  function generateSitemap() {
+    Pace.track(function() {
+      $.ajax({
+        url: '/sitemaps/generate',
+        method: 'POST',
+        data: {
+          domain: $('input[name="domain"]').val(),
+          authenticity_token: $('input[name="authenticity_token"]').val()
+        },
+        success: function(data, status, xhr) {
+          tmpl = $.templates('#resultsTemplate');
+          $('.results-holder').html(tmpl.render(data));
+        },
+        error: function() {
+          $('.results-holder').html('An error occured. Try again');
+        }
+      });
+    });
+  }
 
+  $(document).ready(function() {
     $('form#sitemap button').on('click', function(e) {
       e.preventDefault();
       $('.results-holder').empty()
+      generateSitemap()
+    });
 
-      Pace.track(function() {
-        $.ajax({
-          url: '/sitemaps/generate',
-          method: 'POST',
-          data: {
-            domain: $('input[name="domain"]').val(),
-            authenticity_token: $('input[name="authenticity_token"]').val()
-          },
-          success: function(data, status, xhr) {
-            tmpl = $.templates('#resultsTemplate');
-            $('.results-holder').html(tmpl.render(data));
-          }
-        });
-      });
+    $('form#sitemap input').on('keyup', function(e) {
+      e.preventDefault();
 
+      if (e.keyCode == 13) {
+        $('.results-holder').empty()
+        generateSitemap()
+      }
+    });
+
+    $('.menu').affix({
+      top: 50
+    });
+
+    $('.menu').on('affixed.bs.affix', function(e) {
+      ht = $('.menu').outerHeight(true);
+      $('.results-holder').css('margin-top', ht + 55);
+    });
+
+    $('.menu').on('affixed-top.bs.affix', function(e) {
+      $('.results-holder').css('margin-top', '50px');
     });
   });
 <% end %>

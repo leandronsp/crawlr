@@ -13,3 +13,95 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.menu {
+  width: 100%;
+  display: inline-block;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #c6c6c6;
+}
+
+.menu form {
+  width: 100%;
+  display: inline-block;
+  padding: 0
+}
+
+.menu form input {
+  text-align: center;
+  height: 40px;
+  color: #333;
+  border-radius: 4px;
+  border: 1px solid #a9a9a9;
+  font-size: 18px;
+}
+
+.menu form input:hover {
+  border: 1px solid #666;
+}
+
+.menu form input:focus {
+  border: 1px solid #333;
+  outline: 0;
+}
+
+.menu form button {
+  margin-left: 15px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #337ab7;
+  background-color: #337ab7;
+  color: #fff;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.menu form button:hover {
+  opacity: 1;
+}
+
+.menu form button:focus {
+  outline: 0;
+}
+
+.results-holder {
+  display: inline-block;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.sitemap .page {
+  background-color: rgba(51, 122, 183, 0.1);
+  padding: 18px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.sitemap .page a.title {
+  text-decoration: none;
+}
+
+.sitemap .page ul {
+  margin-top: 10px;
+  padding: 20px;
+  background-color: #fafafa;
+}
+
+.sitemap .page ul li {
+  list-style-type: none;
+}
+
+.no-transition {
+  -webkit-transition: height 0.001s;
+  -moz-transition: height 0.001s;
+  -ms-transition: height 0.001s;
+  -o-transition: height 0.001s;
+  transition: height 0.001s;
+}

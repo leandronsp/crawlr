@@ -10,6 +10,10 @@ class Parser
     @document = Nokogiri::HTML(@source)
   end
 
+  def title
+    @document.css('title').text
+  end
+
   def pages
     no_follow = [
       '/connect/',

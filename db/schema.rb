@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20160523164213) do
 
   create_table "pages", force: :cascade do |t|
     t.string   "url"
+    t.string   "title"
     t.boolean  "visited",    default: false
     t.integer  "domain_id"
     t.datetime "created_at",                 null: false
