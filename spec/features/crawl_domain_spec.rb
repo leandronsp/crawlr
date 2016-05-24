@@ -18,8 +18,8 @@ describe 'after user input, the page is redirected to the sitemap', type: :featu
 
     click_button 'Generate sitemap'
 
-    within "div[data-url='#{domain}'] ul" do
-      expect(page).to have_content "#{domain}/home.css"
+    within "div[title='#{domain}']" do
+      expect(page).to have_content "Home!"
     end
   end
 
