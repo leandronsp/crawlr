@@ -2,6 +2,7 @@ class Page < ActiveRecord::Base
   belongs_to :domain
   has_many :assets
 
+  validates_uniqueness_of :url, scope: :domain_id
   validates_presence_of :url, :domain
 
   def full_url

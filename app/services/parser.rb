@@ -11,17 +11,35 @@ class Parser
   end
 
   def pages
+    no_follow = [
+      '/connect/',
+      '/pay/',
+      '/merchants/',
+      '/users/',
+      '/oauth/',
+      '/health_check/',
+      '/cdn-cgi/',
+      '/api/',
+      '/blog/'
+    ]
+
     result = @document.css('a').select do |link|
-      looks_same_domain? link['href']
+      looks_same_domain?(link['href']) && no_follow.none? do |rule|
+        link['href'].match(rule)
+      end
     end
 
-    result.map do |link|
+    @pages ||= result.map do |link|
       { url: link['href'] }
     end
   end
 
+  def url_without_domain(url)
+    url.match(/(#{@domain.url})?(.*)$/)[2]
+  end
+
   def assets
-    links + metas + scripts
+    @assets ||= links + metas + scripts
   end
 
   def links

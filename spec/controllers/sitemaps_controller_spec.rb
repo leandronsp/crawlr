@@ -15,7 +15,7 @@ describe SitemapsController, type: :controller do
     it 'parses the domain URL and returns all pages and respective assets' do
       domain = 'http://mysample.com'
       source = File.read('spec/fixtures/home.html')
-      allow(RestClient).to receive(:get).and_return(source)
+      allow(RestClient::Request).to receive(:execute).and_return(source)
 
       post :generate, { domain: domain }
 
