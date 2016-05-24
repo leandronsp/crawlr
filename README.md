@@ -19,8 +19,19 @@ Considerations
 Testing
 -
 ```
-bundle exec rspec / bundle exec guard
+# Running unit specs, ignores feature specs
+-> bundle exec rspec -t ~js 
+
+# Running feature specs only
+-> bundle exec rspec -t js
+
+# Happy TDD (it ignores feature specs)
+-> bundle exec guard
+
 ```
+#### Disclaimer on Testing 
+
+Trying to run `rspec` will cause some assertion failures due to conflict with feature specs. That's why the importance of using the option `-t ~js` to ignore feature/js specs.
 
 Usage
 -
