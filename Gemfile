@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rest_client'
 gem 'nokogiri'
 gem 'celluloid'
+gem 'active_model_serializers', '~> 0.10.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -46,6 +47,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'rb-fsevent' if `uname` =~ /Darwin/
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'launchy'
 end
 

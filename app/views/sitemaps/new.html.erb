@@ -1,4 +1,4 @@
-<form id="sitemap" action="/sitemaps/generate" method="POST">
+<form id="sitemap">
   <label for="domain">Domain</label>
   <input type="text" name="domain" />
 
@@ -6,3 +6,49 @@
 
   <button type="submit">Generate sitemap</button>
 </form>
+
+<div class="results-holder">
+</div>
+
+<script id="resultsTemplate" type="text/x-jsrender">
+  <div class="sitemap">
+  {{for pages}}
+    <div data-url="{{:full_url}}">
+      {{:full_url}}
+      <ul>
+        {{for assets}}
+          <li>
+            {{:full_url}}
+          </li>
+        {{/for}}
+      </ul>
+    </div>
+  {{/for}}
+  </div>
+</script>
+
+<%= javascript_tag do %>
+  $(document).ready(function() {
+
+    $('form#sitemap button').on('click', function(e) {
+      e.preventDefault();
+      $('.results-holder').empty()
+
+      Pace.track(function() {
+        $.ajax({
+          url: '/sitemaps/generate',
+          method: 'POST',
+          data: {
+            domain: $('input[name="domain"]').val(),
+            authenticity_token: $('input[name="authenticity_token"]').val()
+          },
+          success: function(data, status, xhr) {
+            tmpl = $.templates('#resultsTemplate');
+            $('.results-holder').html(tmpl.render(data));
+          }
+        });
+      });
+
+    });
+  });
+<% end %>

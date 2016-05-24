@@ -1,7 +1,7 @@
 require 'capybara/rails'
 require 'capybara/rspec'
 
-describe 'after user input, the page is redirected to the sitemap', type: :feature do
+describe 'after user input, the page is redirected to the sitemap', type: :feature, js: true do
   let(:domain) { 'http://mysample.com' }
 
   before do
@@ -10,7 +10,7 @@ describe 'after user input, the page is redirected to the sitemap', type: :featu
   end
 
   it 'inputs a domain and redirects to the sitemap result' do
-    visit '/sitemaps/new'
+    visit '/'
 
     within 'form#sitemap'  do
       fill_in :domain, with: domain
@@ -22,4 +22,5 @@ describe 'after user input, the page is redirected to the sitemap', type: :featu
       expect(page).to have_content "#{domain}/home.css"
     end
   end
+
 end

@@ -13,7 +13,7 @@ class SitemapsController < ApplicationController
     visit_links(domain)
     @pages = domain.reload.pages
 
-    render :sitemap
+    render json: { pages: @pages.map { |p| PageSerializer.new(p).as_json }}
   end
 
   private

@@ -3,14 +3,6 @@ require 'rails_helper'
 describe SitemapsController, type: :controller do
   render_views
 
-  describe '#new' do
-    it 'renders the form to input the domain' do
-      get :new
-      expect(response.body).to have_content('Domain')
-      expect(response.body).to have_content('Generate sitemap')
-    end
-  end
-
   describe '#generate' do
     it 'parses the domain URL and returns all pages and respective assets' do
       domain = 'http://mysample.com'
@@ -19,7 +11,7 @@ describe SitemapsController, type: :controller do
 
       post :generate, { domain: domain }
 
-      expect(response.body).to have_content("#{Domain.last.url}/page-1")
+      expect(JSON.parse(response.body)['pages']).to_not be_empty
     end
   end
 end
