@@ -95,6 +95,7 @@ body {
 }
 
 .sitemap .page ul li {
+  margin-bottom: 2px;
   list-style-type: none;
 }
 
