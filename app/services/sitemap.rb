@@ -29,10 +29,6 @@ class Sitemap
 
   private
 
-  def persist_pages(pages)
-    @mass_insert.insert_pages pages
-  end
-
   def async_responses(pages)
     pages.map do |page|
       page.update_attributes visited: true
