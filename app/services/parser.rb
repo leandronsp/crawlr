@@ -15,17 +15,7 @@ class Parser
   end
 
   def pages
-    no_follow = [
-      '/connect/',
-      '/pay/',
-      '/merchants/',
-      '/users/',
-      '/oauth/',
-      '/health_check/',
-      '/cdn-cgi/',
-      '/api/',
-      '/blog/'
-    ]
+    no_follow = ['/api/']
 
     result = @document.css('a').select do |link|
       looks_same_domain?(link['href']) && no_follow.none? do |rule|
