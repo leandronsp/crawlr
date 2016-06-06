@@ -1,7 +1,7 @@
-Yet Another Crawler
+Crawlr
 ==========
 
-A web crawler, which given a URL, outputs a sitemap with the assets links for each page within the same URL domain.
+A simple web crawler, which given a URL, outputs a sitemap with the assets links for each page within the same URL domain.
 
 * Ruby 2.2.3+
 * Rails 4.2.6+
