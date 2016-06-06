@@ -38,6 +38,8 @@ Usage
 ```
 rails s
 ```
+![S2](app/assets/images/screenshots/s2.png)
+![S1](app/assets/images/screenshots/s1.png)
 
 
 Author
