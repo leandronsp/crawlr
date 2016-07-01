@@ -26,8 +26,8 @@ describe MassInsert do
       allow(ActiveRecord::Base.connection).to receive(:execute)
       values = subject.build_assets_values_to_insert('/page-1', assets)
       subject.insert_assets('/page-1', assets)
-      sql = "INSERT OR IGNORE INTO assets (`url`, `page_id`, `domain_id`, `created_at`,\
-`updated_at`) VALUES #{values.join(', ')}"
+      sql = "INSERT INTO assets (url, page_id, domain_id, created_at,\
+updated_at) VALUES #{values.join(', ')} ON CONFLICT DO NOTHING"
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(sql)
     end
   end
@@ -47,8 +47,8 @@ describe MassInsert do
       allow(ActiveRecord::Base.connection).to receive(:execute)
       values = subject.build_pages_values_to_insert(pages)
       subject.insert_pages(pages)
-      sql = "INSERT OR IGNORE INTO pages (`url`, `domain_id`, `created_at`,\
-`updated_at`) VALUES #{values.join(', ')}"
+      sql = "INSERT INTO pages (url, domain_id, created_at,\
+updated_at) VALUES #{values.join(', ')} ON CONFLICT DO NOTHING"
       expect(ActiveRecord::Base.connection).to have_received(:execute).with(sql)
     end
   end
