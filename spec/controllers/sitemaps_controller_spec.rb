@@ -12,14 +12,14 @@ describe SitemapsController, type: :controller do
 
     it 'parses the domain URL and returns all pages and respective assets' do
       domain = 'http://mysample.com'
-      post :generate, { domain: domain }
+      post :generate, params: { domain: domain }
 
       expect(JSON.parse(response.body)['pages']).to_not be_empty
     end
 
     it 'removes the slash from domain url' do
       domain = 'http://mysample.com/'
-      post :generate, { domain: domain }
+      post :generate, params: { domain: domain }
       expect(Domain.last.url).to eq('http://mysample.com')
     end
   end

@@ -9,8 +9,8 @@ class MassInsert
     values = build_assets_values_to_insert url, assets
     return if values.blank?
 
-    sql = "INSERT OR IGNORE INTO assets (`url`, `page_id`, `domain_id`, `created_at`,\
-`updated_at`) VALUES #{values.join(', ')}"
+    sql = "INSERT INTO assets (url, page_id, domain_id, created_at,\
+updated_at) VALUES #{values.join(', ')} ON CONFLICT DO NOTHING"
 
     ActiveRecord::Base.connection.execute sql
   end
@@ -21,8 +21,8 @@ class MassInsert
     values = build_pages_values_to_insert pages
     return if values.blank?
 
-    sql = "INSERT OR IGNORE INTO pages (`url`, `domain_id`, `created_at`,\
-`updated_at`) VALUES #{values.join(', ')}"
+    sql = "INSERT INTO pages (url, domain_id, created_at,\
+updated_at) VALUES #{values.join(', ')} ON CONFLICT DO NOTHING"
 
     ActiveRecord::Base.connection.execute sql
   end

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523164213) do
+ActiveRecord::Schema.define(version: 20160701215130) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "assets", force: :cascade do |t|
     t.string   "url"
@@ -19,10 +21,9 @@ ActiveRecord::Schema.define(version: 20160523164213) do
     t.integer  "domain_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["domain_id"], name: "index_assets_on_domain_id", using: :btree
+    t.index ["page_id"], name: "index_assets_on_page_id", using: :btree
   end
-
-  add_index "assets", ["domain_id"], name: "index_assets_on_domain_id"
-  add_index "assets", ["page_id"], name: "index_assets_on_page_id"
 
   create_table "domains", force: :cascade do |t|
     t.string   "url"
@@ -37,8 +38,11 @@ ActiveRecord::Schema.define(version: 20160523164213) do
     t.integer  "domain_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["domain_id"], name: "index_pages_on_domain_id", using: :btree
+    t.index ["url", "domain_id"], name: "index_pages_on_url_and_domain_id", unique: true, using: :btree
   end
 
-  add_index "pages", ["url", "domain_id"], name: "index_pages_on_url_and_domain_id", unique: true
-
+  add_foreign_key "assets", "domains"
+  add_foreign_key "assets", "pages"
+  add_foreign_key "pages", "domains"
 end
